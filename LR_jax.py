@@ -57,7 +57,8 @@ def train(W, b, x1, x2, y, epochs, learning_rate):
     loss_array = jnp.array([])
     for _ in range(epochs):
         preds = model(W, b, x)
-        loss_value, Wb_grad = value_and_grad(loss)(preds, y)
+        grad_fun = value_and_grad(loss)
+        loss_value, Wb_grad = grad_fun(preds, y)
         W -= learning_rate * Wb_grad[0]
         b -= learning_rate * Wb_grad[1]
         loss_array = jnp.append(loss_array, loss_value)
